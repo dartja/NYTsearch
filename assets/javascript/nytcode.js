@@ -22,10 +22,10 @@ function runQuery(numArticles, queryURL){
 					// Add to the Article Counter (to make sure we show the right number)
 					articleCounter++;
 					// Create the HTML Well (Section) and Add the Article content for each
-					var wellSection = $("<div>");
-					wellSection.addClass('well');
-					wellSection.attr('id', 'articleWell-' + articleCounter)
-					$('#wellSection').append(wellSection);
+					var articleSection = $("<div>");
+					articleSection.addClass('well');
+					articleSection.attr('id', 'articleWell-' + articleCounter)
+					$('#articleSection').append(articleSection);
 					// Confirm that the specific JSON for the article isn't missing any details
 					// If the article has a headline include the headline in the HTML
 					if(NYTData.response.docs[i].headline != "null"){
@@ -40,6 +40,7 @@ function runQuery(numArticles, queryURL){
 						console.log(NYTData.response.docs[i].byline.original);
 					}
 					// Then display the remaining fields in the HTML (Section Name, Date, URL)
+					$("#articleWell-"+ articleCounter).append('<h5>' + NYTData.response.docs[i].lead_paragraph + "</h5>");
 					$("#articleWell-"+ articleCounter).append('<h5>Section: ' + NYTData.response.docs[i].section_name + "</h5>");
 					$("#articleWell-"+ articleCounter).append('<h5>' + NYTData.response.docs[i].pub_date + "</h5>");
 					$("#articleWell-"+ articleCounter).append("<a href='" + NYTData.response.docs[i].web_url + "'>" + NYTData.response.docs[i].web_url + "</a>");
@@ -58,7 +59,7 @@ function runQuery(numArticles, queryURL){
 		// Initially sets the articleCounter to 0
 		articleCounter = 0;
 		// Empties the region associated with the articles
-		$("#wellSection").empty();
+		$("#articleSection").empty();
 		// Search Term
 		var searchTerm = $('#searchTerm').val().trim();
 		queryURL = queryURLBase + searchTerm;
@@ -85,5 +86,5 @@ function runQuery(numArticles, queryURL){
 // This button clears the top articles section
 $('#clearAll').on('click', function(){
 	articleCounter = 0;
-	$("#wellSection").empty();
+	$("#articleSection").empty();
 })
